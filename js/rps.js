@@ -37,3 +37,25 @@ function playRound(playerSelection, computerSelection = getComputerChoice()) {
         }
     }
 }
+
+function game() {
+    let winCount = 0;
+    let lossCount = 0;
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt("Choose one of the following: rock, paper, scissors");
+        let result = playRound(playerSelection);
+        if (result.startsWith("You win!")) {
+            winCount++;
+        } else if (result.startsWith("You lose!")) {
+            lossCount++;
+        }
+        console.log(result);
+    }
+    if (winCount == lossCount) {
+        console.log("DRAW!");
+    } else if (winCount > lossCount) {
+        console.log("You win!");
+    } else {
+        console.log("You lose!");
+    }
+}
