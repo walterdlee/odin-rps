@@ -68,6 +68,7 @@ function game() {
     if (gameOver) {
         playerScore = 0;
         computerScore = 0;
+        gameOver = false;
     };
 
     let roundResult = playRound(playerSelection);
