@@ -1,3 +1,29 @@
+let playerScore = 0;
+let computerScore = 0;
+
+let playerSelection;
+
+const playerScoreDisplay = document.querySelector(".score#player");
+playerScoreDisplay.textContent = `Your Score: ${playerScore}`;
+
+const computerScoreDisplay = document.querySelector(".score#computer");
+computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+
+const result = document.querySelector(".result");
+result.textContent = "Click on a button to begin game!"
+
+const buttons = document.querySelectorAll('.btn');
+
+let gameOver = false;
+
+for (let button of buttons) {
+    button.addEventListener("click", () => {
+        playerSelection = button.id;
+        game();
+    })
+}
+
+
 function getComputerChoice() {
     let randomNum = Math.floor(Math.random() * 3);
     if (randomNum === 0) {
@@ -39,23 +65,31 @@ function playRound(playerSelection, computerSelection = getComputerChoice()) {
 }
 
 function game() {
-    let winCount = 0;
-    let lossCount = 0;
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Choose one of the following: rock, paper, scissors");
-        let result = playRound(playerSelection);
-        if (result.startsWith("You win!")) {
-            winCount++;
-        } else if (result.startsWith("You lose!")) {
-            lossCount++;
-        }
-        console.log(result);
+    if (gameOver) {
+        playerScore = 0;
+        computerScore = 0;
+    };
+
+    let roundResult = playRound(playerSelection);
+    result.textContent = roundResult;
+
+    if (roundResult.startsWith("You win!")) {
+        playerScore++;
+    } else if (roundResult.startsWith("You lose!")) {
+        computerScore++;
     }
-    if (winCount == lossCount) {
-        console.log("DRAW!");
-    } else if (winCount > lossCount) {
-        console.log("You win!");
-    } else {
-        console.log("You lose!");
+
+    playerScoreDisplay.textContent = `Your Score: ${playerScore}`;
+    computerScoreDisplay.textContent = `Computer Score: ${computerScore}`;
+
+    console.log(roundResult);
+    
+    if (playerScore === 5) {
+        result.textContent = "YOU WIN!! Click to play again!"
+        gameOver = true;
+
+    } else if (computerScore === 5) {
+        result.textContent = "You lose :( Click to play again"
+        gameOver = true;
     }
 }
